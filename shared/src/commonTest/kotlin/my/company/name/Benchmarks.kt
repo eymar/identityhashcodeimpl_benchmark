@@ -8,13 +8,23 @@ class Benchmarks {
 
     /**
      * jvm (System.identityHashCode): 4901ms
-     * wasm (default instance.hashCode): 3851-4050ms
+     * wasm (default instance.hashCode): 3851-4050ms ... 4200ms (when adding different types to the list)
      * wasm (instance._hashCode): ~3780-4100ms
      * wasm (weakMap_jsInterop): ~4956ms
      */
     @Test
     fun benchmark() {
-        val listOf10k = (0..100_000).map { Any() }
+        val listOf10k = (0..100_000).map {
+            if (it % 5 == 0) {
+                SomeClass1("String$it")
+            } else if ( it % 3 == 0) {
+                SomeClass2(it)
+            } else if (it % 2 == 0){
+                SomeClass3(it, "s$it")
+            } else {
+                Any()
+            }
+        }
         val set = IdentityArraySet<Any>()
 
         measureTime {
@@ -30,3 +40,8 @@ class Benchmarks {
         }
     }
 }
+
+class SomeClass1(val s: String)
+class SomeClass2(val i: Int)
+
+class SomeClass3(val i: Int, val s: String)
