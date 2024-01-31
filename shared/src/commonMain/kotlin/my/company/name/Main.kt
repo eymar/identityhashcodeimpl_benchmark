@@ -6,18 +6,19 @@ fun main() {
     benchmark()
 }
 
-fun benchmark() {
-    val listOf50k = (0..50_000).map {
-        if (it % 5 == 0) {
-            SomeClass1("String$it")
-        } else if ( it % 3 == 0) {
-            SomeClass2(it)
-        } else if (it % 2 == 0){
-            SomeClass3(it, "s$it")
-        } else {
-            Any()
-        }
+val listOf50k = (0..50_000).map {
+    if (it % 5 == 0) {
+        SomeClass1("String$it")
+    } else if ( it % 3 == 0) {
+        SomeClass2(it)
+    } else if (it % 2 == 0){
+        SomeClass3(it, "s$it")
+    } else {
+        Any()
     }
+}
+
+fun benchmark() {
     val set = IdentityArraySet<Any>()
 
     measureTime {
@@ -33,6 +34,18 @@ fun benchmark() {
     }
 }
 
+
+fun microbenchmark() {
+    measureTime {
+        repeat(1000) {
+            listOf50k.forEach {
+                identityHashCode(it)
+            }
+        }
+    }.let {
+        notify("Duration = ${it.inWholeMilliseconds}ms")
+    }
+}
 
 expect fun notify(message: String)
 

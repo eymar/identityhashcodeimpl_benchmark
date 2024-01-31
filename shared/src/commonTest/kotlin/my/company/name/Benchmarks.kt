@@ -16,4 +16,14 @@ class Benchmarks {
     fun runBenchmark() {
         benchmark()
     }
+
+    /**
+     * wasm (default instance.hashCode): 550-700ms
+     * wasm (instance._hashCode): 550-600ms
+     */
+    @Test
+    fun runMicrobenchmark() {
+        println("\n\nMicroBenchmark:\n")
+        microbenchmark()
+    }
 }
