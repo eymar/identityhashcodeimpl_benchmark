@@ -10,13 +10,29 @@ kotlin {
     jvm()
 
     js {
-        nodejs {}
+        browser {
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                    // useFirefoxHeadless()
+                    // useSafari()
+                }
+            }
+        }
         binaries.executable()
     }
 
     wasmJs {
-        browser()
+        browser {
+            testTask {
+                useKarma {
+                     useChromeHeadless()
+                     // useFirefoxHeadless()
+                }
+            }
+        }
         binaries.executable()
+        applyBinaryen()
     }
 
     listOf(

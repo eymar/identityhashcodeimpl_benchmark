@@ -27,7 +27,7 @@ inline fun usingInternal_HashCodeRandom(instance: Any?): Int {
 // copied from kotlin Any?.hashCode(): Int
 inline fun Any?.hashCodeExtensionFromKotlin(): Int = this?.hashCode() ?: 0
 
-@Suppress("INVISIBLE_MEMBER")
+@Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "INVISIBLE_SETTER")
 fun Any.identityHashCode(): Int {
     if (_hashCode == 0)
         _hashCode = Random.nextInt(Int.MIN_VALUE, Int.MAX_VALUE)

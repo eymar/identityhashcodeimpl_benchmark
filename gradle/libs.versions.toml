@@ -1,5 +1,6 @@
 [versions]
 
+#kotlin = "2.0.0-Beta3"
 kotlin = "1.9.22"
 
 [libraries]
